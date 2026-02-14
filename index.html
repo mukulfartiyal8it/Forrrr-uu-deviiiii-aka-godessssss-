@@ -114,15 +114,33 @@
 
 <div id="result" class="section hidden">
     <h1>Happy Valentine’s Day 💝</h1>
-    <h2 style="margin:25px 0">"You are my favorite feeling, my safest place, and my forever choice."</h2>
-    
-    <video id="valVideo" width="320" height="auto" loop playsinline muted class="reward-img" onclick="this.play()">
-        <source src="https://googleusercontent.com/generated_video_content/15798410986430532131" type="video/mp4">
-    </video>
-    <p style="font-size: 0.8rem; font-style: italic; color: #d63384;">(Tap the toffee to play! ❤️)</p>
 
-    <p>Check your door! A surprise is waiting... 🎁</p>
-    <h2 style="font-size: 2rem;">I LOVEEEEEE YOUUUUUUUUU ❤️</h2>
+    <h2 style="margin:25px 0">
+      “You are my favorite feeling, my safest place, and my forever choice.”
+    </h2>
+
+    <!-- Melody Image -->
+    <img src="melody.jpg"
+         class="reward-img"
+         alt="Melody Chocolate"
+         onclick="playVideo()">
+
+    <p style="font-size:0.9rem;color:#d63384">
+      (Tap the Melody ❤️)
+    </p>
+
+    <!-- Hidden Video -->
+    <video id="valVideo"
+           class="reward-img hidden"
+           playsinline
+           controls>
+        <source src="love.mp4" type="video/mp4">
+    </video>
+
+    <p>Check your door! A surprise is waiting… 🎁</p>
+    <h2 style="font-size:2rem">I LOVEEEEEE YOUUUUUUUUU ❤️</h2>
+</div>
+
 </div>
 
 <script>
@@ -257,6 +275,18 @@ for(let i=0;i<20;i++){
     h.style.animationDuration=4+Math.random()*5+"s";
     document.body.appendChild(h);
 }
+    function playVideo() {
+    const img = document.querySelector("#result img");
+    const video = document.getElementById("valVideo");
+
+    img.classList.add("hidden");
+    video.classList.remove("hidden");
+
+    video.play().catch(() => {
+        alert("Tap play once ❤️");
+    });
+}
+
 </script>
 </body>
 </html>
