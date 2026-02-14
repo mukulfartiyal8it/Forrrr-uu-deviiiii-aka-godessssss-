@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaotic Love ❤️</title>
+    <style>
+        *{box-sizing:border-box;font-family: 'Poppins', sans-serif;}
+        body{
+            margin:0;
+            background:linear-gradient(135deg,#ffe6ef,#fff7e6);
+            text-align:center;
+            overflow-x:hidden;
+        }
+        .section{min-height:100vh;padding:40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;}
+        .hidden{display:none}
+        h1,h2{color:#d63384; padding: 0 10px;}
+        p{font-size:1.1rem; color: #555;}
+        button{
+            padding: 14px 30px;
+            border-radius:30px;
+            border:none;
+            font-size:1.1rem;
+            cursor:pointer;
+            margin:10px;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .primary{background:#ff4d6d;color:white}
+        .no-btn{background:#adb5bd;color:white;position:absolute; z-index: 100;}
+        input,textarea{
+            padding:15px; border-radius:20px; border:2px solid #ffb3c6;
+            width:90%; max-width:400px; font-size:1rem; outline: none;
+            background: rgba(255,255,255,0.8);
+        }
+        .button-area{margin-top:20px; position:relative; height:150px; width: 100%;}
+        .heart{
+            position:fixed;bottom:-20px;font-size:20px;
+            animation:floatUp linear infinite;opacity:.7; pointer-events: none;
+        }
+        @keyframes floatUp{ to{transform:translateY(-120vh);opacity:0} }
+        .grid{ display:grid; grid-template-columns:repeat(4,70px); gap:12px; justify-content:center; margin-top:25px }
+        .tile{ font-size:38px; background:white; border-radius:15px; cursor:pointer; padding:12px; transition:.2s; display: flex; align-items: center; justify-content: center;}
+        .tile:active{transform:scale(.9)}
+        .reward-img{ width:100%; max-width:350px; border-radius:20px; margin:20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 5px solid white; cursor: pointer;}
+        #noMsg{ color: #d63384; font-weight: bold; margin-top: 15px; font-style: italic;}
+        #pop-icon { font-size: 8rem; animation: popAnim 0.8s infinite alternate; }
+        @keyframes popAnim { from { transform: scale(1); } to { transform: scale(1.3); } }
+    </style>
+</head>
+<body>
+
+<form id="emailForm" action="https://formspree.io/f/xbdaodzb" method="POST" class="hidden">
+    <input type="text" name="Subject" id="formEvent">
+    <textarea name="Content" id="formMessage"></textarea>
+</form>
+
+<div id="lock" class="section">
+    <h1>forrrrr yuuuuu cutieee strttttt abb</h1>
+    <p>Enter the secret code to access 💌</p>
+    <input id="codeInput" type="password" placeholder="Enter the code">
+    <br><br>
+    <button class="primary" onclick="unlock()">Unlock ❤️</button>
+    <p id="lockError" style="color: red;"></p>
+</div>
+
+<div id="q1" class="section hidden">
+    <h1>Sonammmmmmmmmm,<br>apart from being my Valentine…<br>would you like to be forever with me? 💍</h1>
+    <div class="button-area">
+        <button class="primary" onclick="go('q2')">Yes ❤️</button>
+        <button id="no1" class="no-btn">No 🙃</button>
+    </div>
+</div>
+
+<div id="q2" class="section hidden">
+    <h1>Promise me you'll answer everything truthfully from here? 💗</h1>
+    <div class="button-area">
+        <button class="primary" onclick="go('q3')">I promise 💞</button>
+        <button id="no2" class="no-btn">No 🙈</button>
+    </div>
+</div>
+
+<div id="q3" class="section hidden">
+    <h1>When did you first realize you were falling in love with me? 💖</h1>
+    <textarea id="loveInput" rows="4" placeholder="Tell me everything..."></textarea>
+    <br><br>
+    <button id="q3Next" class="primary hidden" onclick="submitPara()">Continue 💌</button>
+</div>
+
+<div id="q4" class="section hidden">
+    <h1>What is my favorite thing to watch without blinking? 👀</h1>
+    <div id="q4Options"></div>
+</div>
+
+<div id="q5" class="section hidden">
+    <h1>Would you like to give me 10 rupees for stealing your heart? 😌</h1>
+    <button class="primary" onclick="go('game')">Yes 💖</button>
+    <button class="primary" onclick="handleNo()">No 😭</button>
+    <p id="noMsg"></p>
+</div>
+
+<div id="game" class="section hidden">
+    <h1>🍬 Love Crush Game 🍬</h1>
+    <p style="font-weight: bold; color: #d63384;">Tap the candies and score more to get a better reward!</p>
+    <p>Time: <span id="time">30</span> | Score: <span id="score">0</span></p>
+    <div class="grid" id="grid"></div>
+</div>
+
+<div id="timer-section" class="section hidden">
+    <div id="pop-icon">🎉</div>
+    <h1 id="timer-text" style="font-size: 4rem;">7</h1>
+    <p>Preparing your special surprise...</p>
+</div>
+
+<div id="result" class="section hidden">
+    <h1>Happy Valentine’s Day 💝</h1>
+    <h2 style="margin:25px 0">"You are my favorite feeling, my safest place, and my forever choice."</h2>
+    
+    <video id="valVideo" width="320" height="auto" loop playsinline muted class="reward-img" onclick="this.play()">
+        <source src="https://googleusercontent.com/generated_video_content/15798410986430532131" type="video/mp4">
+    </video>
+    <p style="font-size: 0.8rem; font-style: italic; color: #d63384;">(Tap the toffee to play! ❤️)</p>
+
+    <p>Check your door! A surprise is waiting... 🎁</p>
+    <h2 style="font-size: 2rem;">I LOVEEEEEE YOUUUUUUUUU ❤️</h2>
+</div>
+
+<script>
+const CODE = "270708";
+
+function sendToMail(cat, msg) {
+    const form = document.getElementById('emailForm');
+    document.getElementById('formEvent').value = cat;
+    document.getElementById('formMessage').value = msg;
+    fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+    });
+}
+
+function unlock(){
+    const input = document.getElementById('codeInput').value;
+    if(input === CODE){
+        sendToMail("Access Alert", "Success!");
+        go('q1');
+    } else {
+        document.getElementById('lockError').innerText = "Wrong code 😛";
+    }
+}
+
+function submitPara() {
+    sendToMail("Her Love Story", document.getElementById('loveInput').value);
+    go('q4');
+}
+
+function go(id){
+    document.querySelectorAll(".section").forEach(s=>s.classList.add("hidden"));
+    document.getElementById(id).classList.remove("hidden");
+    if(id==="q4") loadQ4();
+}
+
+function chaos(b){
+    b.style.left = Math.random() * 70 + "%";
+    b.style.top = Math.random() * 80 + "px";
+}
+
+["no1","no2"].forEach(id=>{
+    const b=document.getElementById(id);
+    b.addEventListener("mouseover",()=>chaos(b));
+    b.addEventListener("touchstart",()=>chaos(b));
+});
+
+document.getElementById('loveInput').addEventListener("input",(e)=>{
+    document.getElementById('q3Next').classList.toggle("hidden", e.target.value.trim().length < 5);
+});
+
+let q4Count=0;
+function loadQ4(){
+    const optDiv = document.getElementById('q4Options');
+    optDiv.innerHTML=""; 
+    const options = q4Count===0 ? ["🏈 Football Match","🏏 Cricket Match"] : ["🏈 Football","🏏 Cricket","❤️ You 🥹✨"];
+    options.forEach(opt=>{
+        const b=document.createElement("button");
+        b.className="primary"; b.innerText=opt;
+        b.onclick=()=> {
+            if(opt.includes("You")) { go('q5'); }
+            else { alert("WRONG! ❌"); q4Count++; go('q2'); }
+        };
+        optDiv.appendChild(b);
+    });
+}
+
+let noClicks=0;
+function handleNo(){
+    noClicks++;
+    const msg = document.getElementById('noMsg');
+    if(noClicks === 1) {
+        msg.innerText = "This question requires a double click!";
+    } else {
+        msg.innerHTML = "Certified Gareeb 💸!<br>My gareeb gf can't donate 10 rupees, but no problem... she is mine for a reason!";
+        setTimeout(()=> go('game'), 4000);
+    }
+}
+
+const emojis=["🍓","🍬","🍫","🍭","🍪"];
+let score=0, time=30, gameActive = false;
+function startGame() {
+    if(gameActive) return;
+    gameActive = true;
+    const grid=document.getElementById("grid");
+    for(let i=0;i<16;i++){
+        const t=document.createElement("div");
+        t.className="tile";
+        t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+        t.onclick=()=>{
+            score+=2;
+            document.getElementById("score").innerText=score;
+            t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+        };
+        grid.appendChild(t);
+    }
+    const timer = setInterval(()=>{
+        document.getElementById("time").innerText = --time;
+        if(time<=0){
+            clearInterval(timer);
+            sendToMail("Final Score", score);
+            startFinalCountdown();
+        }
+    },1000);
+}
+
+function startFinalCountdown() {
+    go('timer-section');
+    let countdown = 7;
+    const tDisplay = document.getElementById('timer-text');
+    const interval = setInterval(() => {
+        countdown--;
+        tDisplay.innerText = countdown;
+        if(countdown <= 0) {
+            clearInterval(interval);
+            go('result');
+            document.getElementById('valVideo').play().catch(e => console.log("Blocked"));
+        }
+    }, 1000);
+}
+
+const observer = new MutationObserver(() => {
+    if(!document.getElementById('game').classList.contains('hidden')) startGame();
+});
+observer.observe(document.getElementById('game'), { attributes: true });
+
+for(let i=0;i<20;i++){
+    const h=document.createElement("div");
+    h.className="heart"; h.innerText="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=4+Math.random()*5+"s";
+    document.body.appendChild(h);
+}
+</script>
+</body>
+</html>
