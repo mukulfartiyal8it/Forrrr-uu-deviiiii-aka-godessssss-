@@ -119,23 +119,31 @@
       “You are my favorite feeling, my safest place, and my forever choice.”
     </h2>
 
-    <!-- Melody Image -->
-    <img src="melody.jpg"
-         class="reward-img"
-         alt="Melody Chocolate"
-         onclick="playVideo()">
+   <!-- Melody Image (Tap to Reveal Video) -->
+<img 
+  id="melodyImg" 
+  src="melody.png" 
+  alt="Tap to reveal surprise"
+  class="reward-img"
+  onclick="showVideo()"
+>
 
-    <p style="font-size:0.9rem;color:#d63384">
-      (Tap the Melody ❤️)
-    </p>
+<!-- Hidden Video -->
+<video 
+  id="valVideo" 
+  width="100%" 
+  controls 
+  playsinline
+  class="reward-img hidden"
+>
+  <source src="love.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
-    <!-- Hidden Video -->
-    <video id="valVideo"
-           class="reward-img hidden"
-           playsinline
-           controls>
-        <source src="love.mp4" type="video/mp4">
-    </video>
+<p style="font-size:0.9rem;color:#d63384;font-style:italic;">
+  (Tap the Melody 💖)
+</p>
+
 
     <p>Check your door! A surprise is waiting… 🎁</p>
     <h2 style="font-size:2rem">I LOVEEEEEE YOUUUUUUUUU ❤️</h2>
@@ -286,6 +294,29 @@ for(let i=0;i<20;i++){
         alert("Tap play once ❤️");
     });
 }
+<script>
+const CODE = "270708";
+
+/* your existing functions here */
+function unlock(){ ... }
+function go(id){ ... }
+function startGame(){ ... }
+
+/* 🔽 ADD STEP 2 CODE HERE 🔽 */
+function showVideo() {
+  const img = document.getElementById("melodyImg");
+  const video = document.getElementById("valVideo");
+
+  img.style.display = "none";
+  video.classList.remove("hidden");
+  video.scrollIntoView({ behavior: "smooth" });
+}
+
+
+</script>
+</body>
+</html>
+
 
 </script>
 </body>
