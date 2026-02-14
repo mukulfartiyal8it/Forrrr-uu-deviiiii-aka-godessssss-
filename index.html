@@ -42,7 +42,7 @@
         .grid{ display:grid; grid-template-columns:repeat(4,70px); gap:12px; justify-content:center; margin-top:25px }
         .tile{ font-size:38px; background:white; border-radius:15px; cursor:pointer; padding:12px; transition:.2s; display: flex; align-items: center; justify-content: center;}
         .tile:active{transform:scale(.9)}
-        .reward-img{ width:100%; max-width:350px; border-radius:20px; margin:20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 5px solid white; cursor: pointer;}
+        .reward-img{ width:100%; max-width:250px; border-radius:20px; margin:20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 5px solid white;}
         #noMsg{ color: #d63384; font-weight: bold; margin-top: 15px; font-style: italic;}
         #pop-icon { font-size: 8rem; animation: popAnim 0.8s infinite alternate; }
         @keyframes popAnim { from { transform: scale(1); } to { transform: scale(1.3); } }
@@ -114,41 +114,12 @@
 
 <div id="result" class="section hidden">
     <h1>Happy Valentine’s Day 💝</h1>
+    <h2 style="margin:25px 0">"You are my favorite feeling, my safest place, and my forever choice."</h2>
+    
+    <img src="melody.png" alt="Melody Toffee" class="reward-img">
 
-    <h2 style="margin:25px 0">
-      “You are my favorite feeling, my safest place, and my forever choice.”
-    </h2>
-
-   <!-- Melody Image (Tap to Reveal Video) -->
-<img 
-  id="melodyImg" 
-  src="melody.png" 
-  alt="Tap to reveal surprise"
-  class="reward-img"
-  onclick="showVideo()"
->
-
-<!-- Hidden Video -->
-<video 
-  id="valVideo" 
-  width="100%" 
-  controls 
-  playsinline
-  class="reward-img hidden"
->
-  <source src="love.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-<p style="font-size:0.9rem;color:#d63384;font-style:italic;">
-  (Tap the Melody 💖)
-</p>
-
-
-    <p>Check your door! A surprise is waiting… 🎁</p>
-    <h2 style="font-size:2rem">I LOVEEEEEE YOUUUUUUUUU ❤️</h2>
-</div>
-
+    <p>Check your door! A surprise is waiting... 🎁</p>
+    <h2 style="font-size: 2rem;">I LOVEEEEEE YOUUUUUUUUU ❤️</h2>
 </div>
 
 <script>
@@ -266,7 +237,6 @@ function startFinalCountdown() {
         if(countdown <= 0) {
             clearInterval(interval);
             go('result');
-            document.getElementById('valVideo').play().catch(e => console.log("Blocked"));
         }
     }, 1000);
 }
@@ -276,48 +246,13 @@ const observer = new MutationObserver(() => {
 });
 observer.observe(document.getElementById('game'), { attributes: true });
 
-for(let i=0;i<20;i++){
+for(let i=0;i<15;i++){
     const h=document.createElement("div");
     h.className="heart"; h.innerText="❤️";
     h.style.left=Math.random()*100+"vw";
     h.style.animationDuration=4+Math.random()*5+"s";
     document.body.appendChild(h);
 }
-    function playVideo() {
-    const img = document.querySelector("#result img");
-    const video = document.getElementById("valVideo");
-
-    img.classList.add("hidden");
-    video.classList.remove("hidden");
-
-    video.play().catch(() => {
-        alert("Tap play once ❤️");
-    });
-}
-<script>
-const CODE = "270708";
-
-/* your existing functions here */
-function unlock(){ ... }
-function go(id){ ... }
-function startGame(){ ... }
-
-/* 🔽 ADD STEP 2 CODE HERE 🔽 */
-function showVideo() {
-  const img = document.getElementById("melodyImg");
-  const video = document.getElementById("valVideo");
-
-  img.style.display = "none";
-  video.classList.remove("hidden");
-  video.scrollIntoView({ behavior: "smooth" });
-}
-
-
-</script>
-</body>
-</html>
-
-
 </script>
 </body>
 </html>
