@@ -114,11 +114,11 @@
 
 <div id="result" class="section hidden">
     <h1>Happy Valentine’s Day 💝</h1>
-    <h2 style="margin:25px 0">"You are my favorite feeling, my safest place, and my forever choice."</h2>
+    <h2 id="rewardTitle" style="margin:25px 0">"You are my favorite feeling..."</h2>
     
-    <img src="melody.png" alt="Melody Toffee" class="reward-img">
+    <img id="rewardImg" src="" alt="Reward" class="reward-img">
 
-    <p>Check your door! A surprise is waiting... 🎁</p>
+    <p id="rewardText">Check your door! A surprise is waiting... 🎁</p>
     <h2 style="font-size: 2rem;">I LOVEEEEEE YOUUUUUUUUU ❤️</h2>
 </div>
 
@@ -202,6 +202,7 @@ function handleNo(){
 
 const emojis=["🍓","🍬","🍫","🍭","🍪"];
 let score=0, time=30, gameActive = false;
+
 function startGame() {
     if(gameActive) return;
     gameActive = true;
@@ -211,7 +212,7 @@ function startGame() {
         t.className="tile";
         t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
         t.onclick=()=>{
-            score+=2;
+            score+=10; // Increased points per click to reach 150 easier
             document.getElementById("score").innerText=score;
             t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
         };
@@ -236,9 +237,29 @@ function startFinalCountdown() {
         tDisplay.innerText = countdown;
         if(countdown <= 0) {
             clearInterval(interval);
-            go('result');
+            showResult();
         }
     }, 1000);
+}
+
+// DYNAMIC REWARD SYSTEM
+function showResult() {
+    const imgElement = document.getElementById('rewardImg');
+    const titleElement = document.getElementById('rewardTitle');
+    
+    if (score <= 100) {
+        imgElement.src = "melody.png"; // Your melody toffee image
+        titleElement.innerText = "You won a sweet Melody! 🍬";
+    } else if (score > 100 && score <= 150) {
+        // I used a generic name here, make sure it matches your file
+        imgElement.src = "dairymilk_icecream.png"; 
+        titleElement.innerText = "A Hearty Treat for a Heart Stealer! 🍦❤️";
+    } else {
+        imgElement.src = "salty_box.png"; // Your salty box image
+        titleElement.innerText = "YOU SCORED BIG! The Ultimate Surprise Box! 🎁🔥";
+    }
+    
+    go('result');
 }
 
 const observer = new MutationObserver(() => {
