@@ -42,7 +42,7 @@
         .grid{ display:grid; grid-template-columns:repeat(4,70px); gap:12px; justify-content:center; margin-top:25px }
         .tile{ font-size:38px; background:white; border-radius:15px; cursor:pointer; padding:12px; transition:.2s; display: flex; align-items: center; justify-content: center;}
         .tile:active{transform:scale(.9)}
-        .reward-img{ width:100%; max-width:250px; border-radius:20px; margin:20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 5px solid white;}
+        .reward-img{ width:100%; max-width:280px; border-radius:20px; margin:20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.15); border: 5px solid white;}
         #noMsg{ color: #d63384; font-weight: bold; margin-top: 15px; font-style: italic;}
         #pop-icon { font-size: 8rem; animation: popAnim 0.8s infinite alternate; }
         @keyframes popAnim { from { transform: scale(1); } to { transform: scale(1.3); } }
@@ -114,7 +114,7 @@
 
 <div id="result" class="section hidden">
     <h1>Happy Valentine’s Day 💝</h1>
-    <h2 id="rewardTitle" style="margin:25px 0">"You are my favorite feeling..."</h2>
+    <h2 id="rewardTitle">"You are my favorite feeling..."</h2>
     
     <img id="rewardImg" src="" alt="Reward" class="reward-img">
 
@@ -124,6 +124,7 @@
 
 <script>
 const CODE = "270708";
+let score=0, time=30, gameActive = false;
 
 function sendToMail(cat, msg) {
     const form = document.getElementById('emailForm');
@@ -188,21 +189,13 @@ function loadQ4(){
     });
 }
 
-let noClicks=0;
 function handleNo(){
-    noClicks++;
     const msg = document.getElementById('noMsg');
-    if(noClicks === 1) {
-        msg.innerText = "This question requires a double click!";
-    } else {
-        msg.innerHTML = "Certified Gareeb 💸!<br>My gareeb gf can't donate 10 rupees, but no problem... she is mine for a reason!";
-        setTimeout(()=> go('game'), 4000);
-    }
+    msg.innerHTML = "Certified Gareeb 💸!<br>My gareeb gf can't donate 10 rupees, but no problem... she is mine for a reason!";
+    setTimeout(()=> go('game'), 4000);
 }
 
 const emojis=["🍓","🍬","🍫","🍭","🍪"];
-let score=0, time=30, gameActive = false;
-
 function startGame() {
     if(gameActive) return;
     gameActive = true;
@@ -212,7 +205,7 @@ function startGame() {
         t.className="tile";
         t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
         t.onclick=()=>{
-            score+=10; // Increased points per click to reach 150 easier
+            score += 2; // AS REQUESTED: 2 POINTS PER TAP
             document.getElementById("score").innerText=score;
             t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
         };
@@ -242,21 +235,23 @@ function startFinalCountdown() {
     }, 1000);
 }
 
-// DYNAMIC REWARD SYSTEM
 function showResult() {
     const imgElement = document.getElementById('rewardImg');
     const titleElement = document.getElementById('rewardTitle');
     
+    // MATCHING YOUR FILE NAMES FROM THE SCREENSHOT
     if (score <= 100) {
-        imgElement.src = "melody.png"; // Your melody toffee image
+        imgElement.src = "melody.png"; 
         titleElement.innerText = "You won a sweet Melody! 🍬";
-    } else if (score > 100 && score <= 150) {
-        // I used a generic name here, make sure it matches your file
-        imgElement.src = "dairymilk_icecream.png"; 
-        titleElement.innerText = "A Hearty Treat for a Heart Stealer! 🍦❤️";
-    } else {
-        imgElement.src = "salty_box.png"; // Your salty box image
-        titleElement.innerText = "YOU SCORED BIG! The Ultimate Surprise Box! 🎁🔥";
+    } 
+    else if (score > 100 && score <= 150) {
+        // Combined Icecream + Dairy Milk reward
+        imgElement.src = "icecream.png"; 
+        titleElement.innerText = "Chocolate + Ice Cream! Double treat for you! 🍦🍫";
+    } 
+    else {
+        imgElement.src = "saltybox.png"; 
+        titleElement.innerText = "THE ULTIMATE SURPRISE BOX! 🎁✨";
     }
     
     go('result');
