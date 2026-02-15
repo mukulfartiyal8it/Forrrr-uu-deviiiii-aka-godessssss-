@@ -95,7 +95,7 @@
 <div id="q5" class="section hidden">
     <h1>Would you like to give me 10 rupees for stealing your heart? 😌</h1>
     <button class="primary" onclick="go('game')">Yes 💖</button>
-    <button class="primary" onclick="handleNo()">No 😭</button>
+    <button class="primary" onclick="handleNoClick()">No 😭</button>
     <p id="noMsg"></p>
 </div>
 
@@ -125,6 +125,7 @@
 <script>
 const CODE = "270708";
 let score=0, time=30, gameActive = false;
+let noClickCount = 0;
 
 function sendToMail(cat, msg) {
     const form = document.getElementById('emailForm');
@@ -165,8 +166,10 @@ function chaos(b){
 
 ["no1","no2"].forEach(id=>{
     const b=document.getElementById(id);
-    b.addEventListener("mouseover",()=>chaos(b));
-    b.addEventListener("touchstart",()=>chaos(b));
+    if(b) {
+        b.addEventListener("mouseover",()=>chaos(b));
+        b.addEventListener("touchstart",()=>chaos(b));
+    }
 });
 
 document.getElementById('loveInput').addEventListener("input",(e)=>{
@@ -189,10 +192,16 @@ function loadQ4(){
     });
 }
 
-function handleNo(){
+// Double Click Logic for Question 5
+function handleNoClick(){
+    noClickCount++;
     const msg = document.getElementById('noMsg');
-    msg.innerHTML = "Certified Gareeb 💸!<br>My gareeb gf can't donate 10 rupees, but no problem... she is mine for a reason!";
-    setTimeout(()=> go('game'), 4000);
+    if(noClickCount === 1) {
+        msg.innerText = "This question requires a double click! Try again. 😉";
+    } else if(noClickCount >= 2) {
+        msg.innerHTML = "Certified Gareeb 💸!<br>My gareeb gf can't donate 10 rupees, but no problem... she is mine for a reason!";
+        setTimeout(()=> go('game'), 4000);
+    }
 }
 
 const emojis=["🍓","🍬","🍫","🍭","🍪"];
@@ -205,7 +214,7 @@ function startGame() {
         t.className="tile";
         t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
         t.onclick=()=>{
-            score += 2; // AS REQUESTED: 2 POINTS PER TAP
+            score += 2; 
             document.getElementById("score").innerText=score;
             t.innerText=emojis[Math.floor(Math.random()*emojis.length)];
         };
@@ -239,19 +248,21 @@ function showResult() {
     const imgElement = document.getElementById('rewardImg');
     const titleElement = document.getElementById('rewardTitle');
     
-    // MATCHING YOUR FILE NAMES FROM THE SCREENSHOT
-    if (score <= 100) {
+    if (score < 100) {
         imgElement.src = "melody.png"; 
         titleElement.innerText = "You won a sweet Melody! 🍬";
     } 
-    else if (score > 100 && score <= 150) {
-        // Combined Icecream + Dairy Milk reward
+    else if (score >= 100 && score < 150) {
+        imgElement.src = "dairymilk.png"; 
+        titleElement.innerText = "Yayy! You got a Dairy Milk Silk! 🍫❤️";
+    } 
+    else if (score >= 150 && score < 200) {
         imgElement.src = "icecream.png"; 
-        titleElement.innerText = "Chocolate + Ice Cream! Double treat for you! 🍦🍫";
+        titleElement.innerText = "Ice Cream + Chocolate! You're a pro! 🍦🍫";
     } 
     else {
         imgElement.src = "saltybox.png"; 
-        titleElement.innerText = "THE ULTIMATE SURPRISE BOX! 🎁✨";
+        titleElement.innerText = "ULTIMATE WINNER! The Salty Box is yours! 🎁✨";
     }
     
     go('result');
